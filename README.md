@@ -36,14 +36,31 @@ Tools > Preferences ( icon ) > Network, and then double-click the appropriate NA
 
 #### **`redhad:`**
 
+- Use the command `ifconfig` in the terminal for each VM to obtain the IP address.
+
+- Open the hosts file using the command below.
+
 ```bash
 sudo vi hosts
 ```
-Add this host with the API to the hosts file.
+- Verify that these IP addresses are correct.
+- Put these IP addresses in the `hosts` file as listed below.
 ```bash
 192.168.7.4 namenode1
 192.168.7.6 datanode1
 192.168.7.7 datanode2
+```
+
+Once you have completed these steps, proceed to the next step by configuring the hostname file. To do so, open the file located at /etc/hostname:
+
+```bash
+sudo vi /etc/hostname 
+```
+
+Then, add the specified hostname, for example, `namenode1`:
+
+```bash
+namenode1 # Ensure that if 'localhost' or any other entry is present in the file, remove it and replace it with 'the specified hostname'.
 ```
 
 
