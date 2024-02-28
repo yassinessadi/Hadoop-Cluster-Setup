@@ -247,3 +247,34 @@ Then add these configurations to the etc/hadoop/hdfs-site.xml file.
     </property>
 </configuration>
 ```
+
+
+```bash
+sudo vi ~/hadoop/etc/hadoop/yarn-site.xml
+```
+
+Configurations for ResourceManager and NodeManager:
+```xml
+<configuration>
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>namenode1</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services.mapreduce.class</name>
+        <value>org.hadoop.mapred.shufflehandler</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.webapp.address</name>
+        <value>namenode1:8088</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.resource-tracker.address</name>
+        <value>namenode1:8031</value>
+    </property>
+</configuration>
+```
