@@ -289,4 +289,4 @@ hdfs dfsadmin -report
 ```
 
 The result must be like this:
-<img src="assets/screen-datanode.png" />
+<img src="assets/screen-datanode.PNG" />
