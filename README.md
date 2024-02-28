@@ -164,3 +164,10 @@ Then add these arguments to the etc/hadoop/core-site.xml file.
     </property>
 </configuration>
 ```
+
+<div style="background-color:red;height:2px;"></div>
+The `hdfs-site.xml` file in Hadoop is a core configuration file used to specify various settings related to the Hadoop Distributed File System (HDFS). It contains parameters that govern the behavior of HDFS daemons such as the NameNode, DataNode, and Secondary NameNode. The settings defined in this file are typically related to HDFS-specific configurations such as block size, replication factor, storage directories, and other properties essential for the functioning of the distributed file system.
+
+#### **`Configurations for NameNode:`**
+etc/hadoop/hdfs-site.xml
+
