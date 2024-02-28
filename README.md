@@ -310,9 +310,20 @@ Configurations for ResourceManager and NodeManager:
 </configuration>
 ```
 
+### **` Workers File:`**
+List all worker hostnames or IP addresses in your etc/hadoop/workers file, one per line. Helper scripts (described below) will use the etc/hadoop/workers file to run commands on many hosts at once. It is not used for any of the Java-based Hadoop configuration. In order to use this functionality, ssh trusts (via either passphraseless ssh or some other means, such as Kerberos) must be established for the accounts used to run Hadoop.
+```bash
+sudo vi ~/hadoop/etc/hadoop/workers
+```
+The Hadoop workers file, typically named workers, is a configuration file used in a Hadoop cluster setup to specify the hostnames or IP addresses of machines that will act as worker nodes. Each line in this file represents a single worker node.
+```bash
+datanode1
+datanode2
+```
+
 ## **`Operating the Hadoop Cluster:`**
 
-Once all the necessary configuration is complete, distribute the files to the HADOOP_CONF_DIR directory on all the machines. This should be the same directory on all machines.
+Once all the necessary configuration is complete, distribute the files to the `HADOOP_CONF_DIR` directory on all the machines. This should be the same directory on all machines.
 
 In general, it is recommended that HDFS and YARN run as separate users. In the majority of installations, HDFS processes execute as ‘hdfs’. YARN is typically using the ‘yarn’ account.
 
@@ -345,8 +356,7 @@ hdfs dfsadmin -report
 The result must be like this:
 <img src="assets/screen-datanode.PNG" />
 
-
-If the data nodes do not appear, please check the ports.
+If the data nodes do not appear, please check the ports. An easier solution is  to disable firewalld `sudo systemctl disable firewalld`, which I do not recommend. Instead, we can selectively allow ports to facilitate connections between nodes.
 
 To check the ports for the datanode, go to the terminal and type 
 ```bash
