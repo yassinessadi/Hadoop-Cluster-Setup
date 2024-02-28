@@ -103,5 +103,64 @@ export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
 ```
 
 
-
 HDFS daemons are NameNode, SecondaryNameNode, and DataNode. YARN daemons are ResourceManager, NodeManager, and WebAppProxy. If MapReduce is to be used, then the MapReduce Job History Server will also be running. For large installations, these are generally running on separate hosts.
+
+#### **`Configuring Environment of Hadoop Daemons`**
+
+Administrators should use the etc/hadoop/hadoop-env.sh and optionally the etc/hadoop/mapred-env.sh and etc/hadoop/yarn-env.sh scripts to do site-specific customization of the Hadoop daemons’ process environment.
+
+At the very least, you must specify the JAVA_HOME so that it is correctly defined on each remote node.
+
+Administrators can configure individual daemons using the configuration options shown below in the table:
+
+for etc/hadoop/hadoop-env.sh :
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+#allow a specific user to run the 
+export HDFS_NAMENODE_USER="jane"
+export HDFS_DATANODE_USER="jane"
+export YARN_RESOURCEMANAGER_USER="jane"
+export HDFS_SECONDARYNAMENODE_USER="jane"
+```
+
+#### **`Configuring the Hadoop Daemons:**
+
+This section deals with important parameters to be specified in the given configuration files:
+
+etc/hadoop/core-site.xml.
+<table>
+    <tr>
+        <th>Parameter</th>
+        <th>Value</th>
+        <th>Notes</th>
+    </tr>
+    <tr>
+        <td>fs.defaultFS</td>
+        <td>NameNode URI</td>
+        <td><i style="color:skyblue">hdfs://host:port/</i></td>
+    </tr>
+    <tr>
+        <td>io.file.buffer.size</td>
+        <td>131072</td>
+        <td><i>Size of read/write buffer used in SequenceFiles.</i></td>
+    </tr>
+<table>
+
+
+now let's apply this config in our hadoop core-site.xml file:
+
+first open the file
+```bash
+sudo vi ~/hadoop/etc/hadoop/core-site.xml
+```
+
+Then add these arguments to the etc/hadoop/core-site.xml file.
+
+```bash
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://namenode1:9000</value>
+    </property>
+</configuration>
+```
