@@ -7,6 +7,9 @@
 ### **Road Map**
 <img src="assets/big data - bd.png">
 
+
+
+
 ### **Prerequisites**
 - Java.
 - Download a stable version of Hadoop from Apache mirrors.
@@ -278,3 +281,12 @@ Configurations for ResourceManager and NodeManager:
     </property>
 </configuration>
 ```
+
+
+To check if the node is running successfully, use the command below.
+```bash
+hdfs dfsadmin -report
+```
+
+The result must be like this:
+<img src="assets/screen-datanode.png" />
