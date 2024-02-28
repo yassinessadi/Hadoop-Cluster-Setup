@@ -108,6 +108,34 @@ export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
 
 HDFS daemons are NameNode, SecondaryNameNode, and DataNode. YARN daemons are ResourceManager, NodeManager, and WebAppProxy. If MapReduce is to be used, then the MapReduce Job History Server will also be running. For large installations, these are generally running on separate hosts.
 
+
+## **`config ssh:`**
+SSH passwordless login is an SSH authentication method that employs a pair of public and private keys for asymmetric encryption. The public key resides on the server, and only a client that presents the 
+private key can connect.
+
+to setup ssh you need only to run commands bellow:
+- Generate an RSA SSH key using: ssh-keygen -t rsa:
+```bash
+ssh-keygen -t rsa
+```
+- Append the contents of the `id_rsa.pub` file to the `authorized_keys` file using:
+```bash
+cat id_rsa.pub >> authorized_keys
+```
+
+
+- Use `ssh-copy-id` to copy your `SSH` public key to the `authorized_keys` file on the remote machine:
+```bash
+ssh-copy-id username@slave_ip
+```
+- To SSH into a machine with the IP address 'ip' or the hostname 'hostname' with the username 'username', you can use the following command let's try login :
+
+```bash
+ssh username@ip
+# example: ssh 'jane@192.168.7.6'
+```
+
+
 ### **`Configuring Environment of Hadoop Daemons`**
 
 Administrators should use the etc/hadoop/hadoop-env.sh and optionally the etc/hadoop/mapred-env.sh and etc/hadoop/yarn-env.sh scripts to do site-specific customization of the Hadoop daemons’ process environment.
@@ -282,6 +310,32 @@ Configurations for ResourceManager and NodeManager:
 </configuration>
 ```
 
+## **`Operating the Hadoop Cluster:`**
+
+Once all the necessary configuration is complete, distribute the files to the HADOOP_CONF_DIR directory on all the machines. This should be the same directory on all machines.
+
+In general, it is recommended that HDFS and YARN run as separate users. In the majority of installations, HDFS processes execute as ‘hdfs’. YARN is typically using the ‘yarn’ account.
+
+### **`Hadoop Startup:`**
+To start a Hadoop cluster you will need to start both the HDFS and YARN cluster.
+
+The first time you bring up HDFS, it must be formatted. Format a new distributed filesystem as hdfs:
+
+```bash
+hdfs namenode -format
+```
+
+all of the HDFS processes can be started with a utility script. As hdfs:
+
+```bash
+start-dfs.sh
+```
+
+all of the YARN processes can be started with a utility script. As yarn:
+
+```bash
+start-yarn.sh
+```
 
 To check if the node is running successfully, use the command below.
 ```bash
@@ -290,3 +344,24 @@ hdfs dfsadmin -report
 
 The result must be like this:
 <img src="assets/screen-datanode.PNG" />
+
+
+If the data nodes do not appear, please check the ports.
+
+To check the ports for the datanode, go to the terminal and type 
+```bash
+netstat -tunl | grep LISTEN
+```
+Look for the port 9866. To open this port in Red Hat, you can use the following command:
+
+```bash
+sudo firewall-cmd --zone=public --add-port=9866/tcp --permanent
+```
+This command adds port 9866 for TCP traffic in the firewall settings permanently. After executing this command, remember to reload the firewall settings for changes to take effect:
+```bash
+sudo firewall-cmd --reload
+```
+After adding the ports permanently, now restart your Hadoop by running the command below:
+```bash
+start-dfs.sh
+```
