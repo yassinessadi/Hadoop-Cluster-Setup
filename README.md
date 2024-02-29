@@ -375,3 +375,35 @@ After adding the ports permanently, now restart your Hadoop by running the comma
 ```bash
 start-dfs.sh
 ```
+
+
+
+## **`MapReduce:`**
+
+MapReduce is a programming model for processing and generating large datasets in parallel across a distributed cluster of computers. A common example is the word count problem, where you want to count the frequency of each word in a large collection of documents.
+
+Now let's run the code by copying the Python scripts from the MapReduce folder. Next, create a text file and name it as desired, such as 
+'index.txt'.
+```bash
+cd ~/Desktop
+touch index.txt
+```
+add some content to your file any content Then, upload the file to HDFS using the command below
+```bash
+#for create a folder
+hdfs dfs -mkdir /user
+#now put the text folder 
+hdfs dfs -put index.txt /user/index.txt
+#for check the file if exists in hdfs run the command bellow
+hdfs dfs -ls /users
+```
+and execute the MapReduce program using the command:
+```bash
+#make sure you replace ... with the correct path
+hadoop jar ~/hadoop/share/.../lib/hadoop-streaming-v-x.jar
+-input /user/index.txt
+-output /users/output
+-mapper mapper.py
+-reducer reducer.py
+```
+
