@@ -395,7 +395,7 @@ hdfs dfs -mkdir /user
 #now put the text folder 
 hdfs dfs -put index.txt /user/index.txt
 #for check the file if exists in hdfs run the command bellow
-hdfs dfs -ls /users
+hdfs dfs -ls /user
 ```
 and execute the MapReduce program using the command:
 ```bash
