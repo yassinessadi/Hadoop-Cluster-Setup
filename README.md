@@ -407,3 +407,6 @@ hadoop jar ~/hadoop/share/.../lib/hadoop-streaming-v-x.jar
 -reducer reducer.py
 ```
 
+
+## **`Note:`**
+This guide provides a good starting point for setting up a basic Hadoop cluster. However, it is crucial to remember that this is a fundamental setup, and additional configurations might be necessary depending on your specific needs and environment.
